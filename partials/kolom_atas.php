@@ -1,6 +1,6 @@
 <tr>
   <td colspan='3' align='center' height='150' style='background:#000;'>
-    <h1>Ini Bagian Header/Judul</h1>
+    <h1>Tugas Akhir Pemrograman Web</h1>
   </td>
 <tr>
 <tr>

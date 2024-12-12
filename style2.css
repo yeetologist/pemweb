@@ -21,3 +21,36 @@ a{margin:0px;padding:0px;}
 	color:#fff;
 	text-decoration:none;
 }
+
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+h1 {
+	color: #fff;
+	margin: 0;
+	line-height: 150px;
+}
+
+#menu {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
+}
+
+#menu a {
+	text-decoration: none;
+	color: #fff;
+	font-size: 18px;
+	padding: 10px 15px;
+	background-color: #a65c1e;
+	border-radius: 5px;
+	transition: background-color 0.3s ease;
+}
+
+#menu a:hover {
+	background-color: #f09a36;
+}

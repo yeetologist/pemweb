@@ -1,5 +1,5 @@
 <?php
-$t = 29;
+$t = 90;
 
 if ($t > "79") {
   echo "Nilai Angka : ", $t, "<br>";
@@ -50,3 +50,4 @@ echo "<br>";
 for ($x = 10; $x >= 1; $x -= 2) {
   echo "The number is: $x <br>";
 }
+?>

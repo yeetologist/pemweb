@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan'])) {
     try {
       // Update existing record
       $stmt = $pdo->prepare("UPDATE mahasiswa
-                           SET nim = :nim, nama = :nama, jeniskelamin = :jeniskelamin, hobi = :hobi, agama = :agama, alamat = :alamat, foto = :foto, updated_at = NOW() 
+                           SET nim = :nim, nama = :nama, jeniskelamin = :jeniskelamin, hobi = :hobi, agama = :agama, alamat = :alamat, foto = :foto 
                            WHERE id = :id");
       $stmt->execute([
         ':nim' => $nim,
@@ -44,8 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan'])) {
   } else if (isset($_SESSION['nim']) && $_SESSION['nim'] === 'admin') {
     try {
       // Insert new record
-      $stmt = $pdo->prepare("INSERT INTO mahasiswas (nim, nama, jeniskelamin, hobi, agama, alamat, foto, created_at, updated_at) 
-                         VALUES (:nim, :nama, :jeniskelamin, :hobi, :agama, :alamat, :foto, NOW(), NOW())");
+      $stmt = $pdo->prepare("INSERT INTO mahasiswas (nim, nama, jeniskelamin, hobi, agama, alamat, foto) 
+                         VALUES (:nim, :nama, :jeniskelamin, :hobi, :agama, :alamat, :foto)");
       $stmt->execute([
         ':nim' => $nim,
         ':nama' => $nama,

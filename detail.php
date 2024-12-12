@@ -7,7 +7,7 @@ if (isset($_GET['nim'])) {
   $nim = htmlspecialchars($_GET['nim']); // Sanitize input
 
   // Fetch student details
-  $stmt = $pdo->prepare("SELECT * FROM mahasiswas WHERE nim = :nim");
+  $stmt = $pdo->prepare("SELECT * FROM mahasiswa WHERE nim = :nim");
   $stmt->execute([':nim' => $nim]);
   $student = $stmt->fetch();
 

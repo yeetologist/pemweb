@@ -1,17 +1,17 @@
 <?php
 require 'koneksi.php';
-$stmt1 = $pdo->prepare("SELECT * FROM mahasiswa WHERE created_at <= :timestamp1 AND nama != :nama");
+$stmt1 = $pdo->prepare("SELECT * FROM mahasiswa");
 $stmt1->execute([':timestamp1' => '2024-12-12 12:26:45', ':nama' => 'admin']);
 $result1 = $stmt1->fetchAll();
 
-$stmt2 = $pdo->prepare("SELECT * FROM mahasiswa WHERE created_at >= :timestamp2 AND nama != :nama");
+$stmt2 = $pdo->prepare("SELECT * FROM mahasiswa");
 $stmt2->execute([':timestamp2' => '2024-12-12 12:28:08', ':nama' => 'admin']);
 $result2 = $stmt2->fetchAll();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan'])) {
   $nim = htmlspecialchars($_POST['nim']);
   $nama = htmlspecialchars($_POST['nama']);
-  $stmtIntput = $pdo->prepare("INSERT INTO mahasiswa (nim, nama, created_at, updated_at) VALUES (:nim, :nama, NOW(), NOW())");
+  $stmtIntput = $pdo->prepare("INSERT INTO mahasiswa (nim, nama) VALUES (:nim, :nama)");
   $stmtIntput->execute([':nim' => $nim, ':nama' => $nama]);
   header('Location: menu5.php');
   exit();
@@ -27,6 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan'])) {
     <tr height='400' valign='top'>
       <?php require './partials/kolom_kiri.php'; ?>
       <td width='700'>
+        <?php
+        if ($_SESSION['id']=='admin')
+        {
+        ?>
         <form action='' method="POST">
           <table cellpadding='3'>
             <tr>
@@ -52,6 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan'])) {
             </tr>
           </table>
         </form>
+        <?php
+      }
+      ?>
         <hr>
         <table width="100%" border="0">
           <tr valign="top">

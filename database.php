@@ -20,14 +20,19 @@ $result = $stmt->fetchAll();
           <tr bgcolor='#ccc'>
             <td>NIM</td>
             <td>Nama</td>
-            <td></td>
+            <td>Action</td>
           </tr>
           <?php
           foreach ($result as $row) {
             echo "<tr>";
             echo "<td>{$row['nim']}</td>";
             echo "<td>{$row['nama']}</td>";
-            if (isset($_SESSION['nim']) && $_SESSION['nim'] === $row['nim']) {
+            
+            if($_SESSION['id'] == 'admin')
+            {
+              echo "<td><a href='detail.php?nim={$row['nim']}'>Detail</a> | <a href='form.php'>Edit</a> | <a href='delete.php?nim={$row['nim']}'>Delete</a></td>";
+            }
+            else if (isset($_SESSION['nim']) && $_SESSION['nim'] === $row['nim']) {
               echo "<td><a href='detail.php?nim={$row['nim']}'>Detail</a> | <a href='form.php'>Edit</a></td>";
             } else {
               echo "<td><a href='detail.php?nim={$row['nim']}'>Detail</a></td>";
