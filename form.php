@@ -1,6 +1,8 @@
 <?php
 
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+  session_start();
+};
 
 require 'koneksi.php';
 
@@ -84,16 +86,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan'])) {
       echo "Error: " . $e->getMessage();
     }
   }
-} else {
-  $_SESSION['nim'] = !empty($_SESSION['nim']) ? $_SESSION['nim'] : '';
-  $_SESSION['nama'] = !empty($_SESSION['nama']) ? $_SESSION['nama'] : '';
-  $_SESSION['jeniskelamin'] = !empty($_SESSION['jeniskelamin']) ? $_SESSION['jeniskelamin'] : '';
-  $_SESSION['hobi'] = isset($_SESSION['hobi']) ? $_SESSION['hobi'] : '[]'; // Default to empty JSON array
-  if (!is_array($_SESSION['hobi'])) {
-    $_SESSION['hobi'] = json_decode($_SESSION['hobi'], true); // Decode JSON string into an array
+} else if (isset($_GET['id'])) {
+
+  $stmt = $pdo->prepare("SELECT * FROM mahasiswas WHERE id = :id");
+  $stmt->execute([':id' => $_GET['id']]);
+  $result = $stmt->fetch();
+
+  // Map result fields to variables with default fallback values
+  $nim = !empty($result['nim']) ? $result['nim'] : '';
+  $nama = !empty($result['nama']) ? $result['nama'] : '';
+  $jeniskelamin = !empty($result['jeniskelamin']) ? $result['jeniskelamin'] : '';
+  $hobi = isset($result['hobi']) ? $result['hobi'] : '[]'; // Default to empty JSON array
+
+  // Decode JSON string into an array for hobi, if it's not already an array
+  if (!is_array($hobi)) {
+    $hobi = json_decode($hobi, true);
   }
-  $_SESSION['agama'] = !empty($_SESSION['agama']) ? $_SESSION['agama'] : '';
-  $_SESSION['alamat'] = !empty($_SESSION['alamat']) ? $_SESSION['alamat'] : '';
+
+  $agama = !empty($result['agama']) ? $result['agama'] : '';
+  $alamat = !empty($result['alamat']) ? $result['alamat'] : '';
+
+  var_dump($nama);
+} else {
+  $nim = !empty($_SESSION['nim']) ? $_SESSION['nim'] : '';
+  $nama = !empty($_SESSION['nama']) ? $_SESSION['nama'] : '';
+  $jeniskelamin = !empty($_SESSION['jeniskelamin']) ? $_SESSION['jeniskelamin'] : '';
+  $hobi = isset($_SESSION['hobi']) ? $_SESSION['hobi'] : '[]'; // Default to empty JSON array
+  if (!is_array($_SESSION['hobi'])) {
+    $hobi = json_decode($_SESSION['hobi'], true); // Decode JSON string into an array
+  }
+  $agama = !empty($_SESSION['agama']) ? $_SESSION['agama'] : '';
+  $alamat = !empty($_SESSION['alamat']) ? $_SESSION['alamat'] : '';
 }
 ?>
 
@@ -114,22 +137,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan'])) {
             <tr>
               <td>NIM</td>
               <td>:</td>
-              <td><input type='text' name='nim' value="<?= htmlspecialchars($_SESSION['nim']); ?>"></td>
+              <td><input type='text' name='nim' value="<?= htmlspecialchars($nim); ?>"></td>
             </tr>
             <tr>
               <td>Nama</td>
               <td>:</td>
-              <td><input type='text' name='nama' value="<?= htmlspecialchars($_SESSION['nama']); ?>"></td>
+              <td><input type='text' name='nama' value="<?= htmlspecialchars($nama); ?>"></td>
             </tr>
             <tr>
               <td>Jenis Kelamin</td>
               <td>:</td>
               <td>
                 <label>
-                  <input type='radio' name='jk' value='pria' <?= ($_SESSION['jeniskelamin'] === 'pria') ? 'checked' : ''; ?>> Pria
+                  <input type='radio' name='jk' value='pria' <?= ($jeniskelamin === 'pria') ? 'checked' : ''; ?>> Pria
                 </label>
                 <label>
-                  <input type='radio' name='jk' value='wanita' <?= ($_SESSION['jeniskelamin'] === 'wanita') ? 'checked' : ''; ?>> Wanita
+                  <input type='radio' name='jk' value='wanita' <?= ($jeniskelamin === 'wanita') ? 'checked' : ''; ?>> Wanita
                 </label>
               </td>
             </tr>
@@ -138,13 +161,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan'])) {
               <td>:</td>
               <td>
                 <label>
-                  <input type='checkbox' name='hobi[]' value='Hobi 1' <?= in_array('Hobi 1', $_SESSION['hobi']) ? 'checked' : ''; ?>> Hobi 1
+                  <input type='checkbox' name='hobi[]' value='Hobi 1' <?= in_array('Hobi 1', $hobi) ? 'checked' : ''; ?>> Hobi 1
                 </label>
                 <label>
-                  <input type='checkbox' name='hobi[]' value='Hobi 2' <?= in_array('Hobi 2', $_SESSION['hobi']) ? 'checked' : ''; ?>> Hobi 2
+                  <input type='checkbox' name='hobi[]' value='Hobi 2' <?= in_array('Hobi 2', $hobi) ? 'checked' : ''; ?>> Hobi 2
                 </label>
                 <label>
-                  <input type='checkbox' name='hobi[]' value='Hobi 3' <?= in_array('Hobi 3', $_SESSION['hobi']) ? 'checked' : ''; ?>> Hobi 3
+                  <input type='checkbox' name='hobi[]' value='Hobi 3' <?= in_array('Hobi 3', $hobi) ? 'checked' : ''; ?>> Hobi 3
                 </label>
               </td>
             </tr>
@@ -153,15 +176,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan'])) {
               <td>:</td>
               <td>
                 <select name='agama'>
-                  <option value="Islam" <?= ($_SESSION['agama'] === 'Islam') ? 'selected' : ''; ?>>Islam</option>
-                  <option value="Kristen" <?= ($_SESSION['agama'] === 'Kristen') ? 'selected' : ''; ?>>Kristen</option>
+                  <option value="Islam" <?= ($agama === 'Islam') ? 'selected' : ''; ?>>Islam</option>
+                  <option value="Kristen" <?= ($agama === 'Kristen') ? 'selected' : ''; ?>>Kristen</option>
                 </select>
               </td>
             </tr>
             <tr>
               <td>Alamat</td>
               <td>:</td>
-              <td><textarea cols='50' rows='5' name='alamat'><?= htmlspecialchars($_SESSION['alamat']); ?></textarea></td>
+              <td><textarea cols='50' rows='5' name='alamat'><?= htmlspecialchars($alamat); ?></textarea></td>
             </tr>
             <tr>
               <td>Foto</td>

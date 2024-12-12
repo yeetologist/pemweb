@@ -32,7 +32,7 @@ $result = $stmt->fetchAll();
             } else if (
               isset($_SESSION['nim']) && $_SESSION['nim'] === 'admin'
             ) {
-              echo "<td><a href='detail.php?nim={$row['nim']}'>Detail</a> | <a href='form.php'>Edit</a> | | <a href='hapus.php?id={$row['id']}'>Delete</a></td>";
+              echo "<td><a href='detail.php?nim={$row['nim']}'>Detail</a> | <a href='form.php?id={$row['id']}'>Edit</a> | | <a href='hapus.php?id={$row['id']}'>Delete</a></td>";
             } else {
               echo "<td><a href='detail.php?nim={$row['nim']}'>Detail</a></td>";
             }
