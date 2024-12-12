@@ -19,5 +19,15 @@ try {
   echo "Error: " . $e->getMessage();
 }
 
-// Close the connection
-// $pdo = null;
+function updateSession($user)
+{
+  $_SESSION['loggedin'] = true;
+  $_SESSION['id'] = $user['id'] ?? null;
+  $_SESSION['nim'] = $user['nim'] ?? null;
+  $_SESSION['nama'] = $user['nama'] ?? null;
+  $_SESSION['jeniskelamin'] = $user['jeniskelamin'] ?? null;
+  $_SESSION['hobi'] = $user['hobi'] ?? '[]'; // Default to empty JSON string
+  $_SESSION['agama'] = $user['agama'] ?? null;
+  $_SESSION['alamat'] = $user['alamat'] ?? null;
+  $_SESSION['foto'] = $user['foto'] ?? null;
+}

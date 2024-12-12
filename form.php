@@ -37,7 +37,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan'])) {
         ':foto' => $foto,
         ':id' => $_SESSION['id']
       ]);
-      echo "Data successfully updated!";
+
+      $stmt = $pdo->prepare("SELECT * FROM mahasiswas WHERE id = :id");
+      $stmt->execute([':id' => $_SESSION['id']]);
+      $user = $stmt->fetch();
+
+      updateSession($user);
+      header('Location: form.php');
+      exit();
     } catch (PDOException $e) {
       echo "Error: " . $e->getMessage();
     }
@@ -55,7 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan'])) {
         ':alamat' => $alamat,
         ':foto' => $foto
       ]);
-      echo "Data successfully saved!";
+      header('Location: database.php');
+      exit();
     } catch (PDOException $e) {
       echo "Error: " . $e->getMessage();
     }

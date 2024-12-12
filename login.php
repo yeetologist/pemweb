@@ -16,15 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
   if ($user) {
     if ($nama === $user['nama']) { // Change to password_verify($password, $user['password']) if hashing
       // Create session variables
-      $_SESSION['loggedin'] = true;
-      $_SESSION['id'] = $user['id'];
-      $_SESSION['nim'] = $user['nim'];
-      $_SESSION['nama'] = $user['nama'];
-      $_SESSION['jeniskelamin'] = $user['jeniskelamin'];
-      $_SESSION['hobi'] = $user['hobi'];
-      $_SESSION['agama'] = $user['agama'];
-      $_SESSION['alamat'] = $user['alamat'];
-      $_SESSION['foto'] = $user['foto'];
+
+      updateSession($user);
 
       // Redirect to a secure page (e.g., dashboard)
       header('Location: index.php');
