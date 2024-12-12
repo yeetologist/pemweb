@@ -23,21 +23,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan'])) {
   // Check if the user is already logged in and update the data if so
   if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     try {
-      // Update existing record
-      $stmt = $pdo->prepare("UPDATE mahasiswas 
-                           SET nim = :nim, nama = :nama, jeniskelamin = :jeniskelamin, hobi = :hobi, agama = :agama, alamat = :alamat, foto = :foto, updated_at = NOW() 
-                           WHERE id = :id");
-      $stmt->execute([
-        ':nim' => $nim,
-        ':nama' => $nama,
-        ':jeniskelamin' => $jeniskelamin,
-        ':hobi' => $hobi,
-        ':agama' => $agama,
-        ':alamat' => $alamat,
-        ':foto' => $foto,
-        ':id' => $_SESSION['id']
-      ]);
+      // Conditionally prepare the SQL query
+      if ($foto !== null) {
+        // Include the foto column in the update
+        $sql = "UPDATE mahasiswas 
+              SET nim = :nim, nama = :nama, jeniskelamin = :jeniskelamin, hobi = :hobi, agama = :agama, alamat = :alamat, foto = :foto, updated_at = NOW() 
+              WHERE id = :id";
+      } else {
+        // Exclude the foto column from the update
+        $sql = "UPDATE mahasiswas 
+              SET nim = :nim, nama = :nama, jeniskelamin = :jeniskelamin, hobi = :hobi, agama = :agama, alamat = :alamat, updated_at = NOW() 
+              WHERE id = :id";
+      }
 
+      // Prepare and execute the query
+      $stmt = $pdo->prepare($sql);
+
+      // Bind common parameters
+      $stmt->bindParam(':nim', $nim);
+      $stmt->bindParam(':nama', $nama);
+      $stmt->bindParam(':jeniskelamin', $jeniskelamin);
+      $stmt->bindParam(':hobi', $hobi);
+      $stmt->bindParam(':agama', $agama);
+      $stmt->bindParam(':alamat', $alamat);
+      $stmt->bindParam(':id', $_SESSION['id']);
+
+      // Bind the foto parameter only if it's included in the query
+      if ($foto !== null) {
+        $stmt->bindParam(':foto', $foto);
+      }
+
+      $stmt->execute();
       $stmt = $pdo->prepare("SELECT * FROM mahasiswas WHERE id = :id");
       $stmt->execute([':id' => $_SESSION['id']]);
       $user = $stmt->fetch();

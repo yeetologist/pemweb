@@ -1,5 +1,5 @@
 <?php
-$t = 29;
+$t = 72;
 
 if ($t > "79") {
   echo "Nilai Angka : ", $t, "<br>";
