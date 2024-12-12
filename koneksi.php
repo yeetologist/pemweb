@@ -2,9 +2,9 @@
 // Database configuration
 $host = 'localhost';
 $port = '3306';
-$dbname = 'pemweb';
+$dbname = 'latihan';
 $username = 'root';
-$password = '';
+$password = 'Mfr465-wz34';
 
 $dsn = "mysql:host={$host};port={$port};dbname={$dbname};charset=utf8";
 

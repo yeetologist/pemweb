@@ -10,7 +10,7 @@ if (session_status() == PHP_SESSION_NONE) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
   $nim = $_POST['user'];
   $nama = $_POST['pass'];
-  $stmt = $pdo->prepare("SELECT * FROM mahasiswas WHERE nim = :nim");
+  $stmt = $pdo->prepare("SELECT * FROM mahasiswa WHERE nim = :nim");
   $stmt->execute([':nim' => $nim]);
   $user = $stmt->fetch();
   if ($user) {
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
       $_SESSION['id'] = $user['id'];
       $_SESSION['nim'] = $user['nim'];
       $_SESSION['nama'] = $user['nama'];
-      $_SESSION['jeniskelamin'] = $user['jeniskelamin'];
+      $_SESSION['jenis kelamin'] = $user['jenis kelamin'];
       $_SESSION['hobi'] = $user['hobi'];
       $_SESSION['agama'] = $user['agama'];
       $_SESSION['alamat'] = $user['alamat'];

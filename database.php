@@ -1,6 +1,6 @@
 <?php
 require 'koneksi.php';
-$stmt = $pdo->prepare("SELECT * FROM mahasiswas");
+$stmt = $pdo->prepare("SELECT * FROM mahasiswa");
 $stmt->execute();
 $result = $stmt->fetchAll();
 ?>

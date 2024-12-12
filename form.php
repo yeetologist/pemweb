@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan'])) {
   if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     try {
       // Update existing record
-      $stmt = $pdo->prepare("UPDATE mahasiswas 
+      $stmt = $pdo->prepare("UPDATE mahasiswa
                            SET nim = :nim, nama = :nama, jeniskelamin = :jeniskelamin, hobi = :hobi, agama = :agama, alamat = :alamat, foto = :foto, updated_at = NOW() 
                            WHERE id = :id");
       $stmt->execute([
