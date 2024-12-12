@@ -98,22 +98,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan'])) {
   $jeniskelamin = !empty($result['jeniskelamin']) ? $result['jeniskelamin'] : '';
   $hobi = isset($result['hobi']) ? $result['hobi'] : '[]'; // Default to empty JSON array
 
-  // Decode JSON string into an array for hobi, if it's not already an array
-  if (!is_array($hobi)) {
+  // Ensure `$_SESSION['hobi']` is valid before decoding
+  if (!empty($hobi) && !is_array($hobi)) {
     $hobi = json_decode($hobi, true);
+  } elseif (empty($hobi)) {
+    $hobi = []; // Default to an empty array if `hobi` is null or empty
   }
-
   $agama = !empty($result['agama']) ? $result['agama'] : '';
   $alamat = !empty($result['alamat']) ? $result['alamat'] : '';
-
-  var_dump($nama);
 } else {
   $nim = !empty($_SESSION['nim']) ? $_SESSION['nim'] : '';
   $nama = !empty($_SESSION['nama']) ? $_SESSION['nama'] : '';
   $jeniskelamin = !empty($_SESSION['jeniskelamin']) ? $_SESSION['jeniskelamin'] : '';
   $hobi = isset($_SESSION['hobi']) ? $_SESSION['hobi'] : '[]'; // Default to empty JSON array
-  if (!is_array($_SESSION['hobi'])) {
-    $hobi = json_decode($_SESSION['hobi'], true); // Decode JSON string into an array
+
+  // Ensure `$_SESSION['hobi']` is valid before decoding
+  if (!empty($hobi) && !is_array($hobi)) {
+    $hobi = json_decode($hobi, true);
+  } elseif (empty($hobi)) {
+    $hobi = []; // Default to an empty array if `hobi` is null or empty
   }
   $agama = !empty($_SESSION['agama']) ? $_SESSION['agama'] : '';
   $alamat = !empty($_SESSION['alamat']) ? $_SESSION['alamat'] : '';
