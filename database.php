@@ -1,20 +1,20 @@
 <?php
 require 'koneksi.php';
-$stmt = $pdo->prepare("SELECT * FROM users");
+$stmt = $pdo->prepare("SELECT * FROM mahasiswas");
 $stmt->execute();
 $result = $stmt->fetchAll();
 ?>
 <html lang="id">
-<?= require 'head.php'; ?>
+<?php require 'head.php'; ?>
 
 
 <body>
 
   <table border='1' width='100%' cellpadding='10'>
-    <?= require 'kolom_atas.php'; ?>
+    <?php require 'kolom_atas.php'; ?>
 
     <tr height='400' valign='top'>
-      <?= require 'kolom_kiri.php'; ?>
+      <?php require 'kolom_kiri.php'; ?>
       <td width='700'>
         <table border='1' cellpadding='10'>
           <tr bgcolor='#ccc'>
@@ -25,16 +25,26 @@ $result = $stmt->fetchAll();
           <?php
           foreach ($result as $row) {
             echo "<tr>";
-            echo "<td>{$row['id']}</td>";
-            echo "<td>{$row['username']}</td>";
-            echo "<td><a href='detail.php?nim={$row['id']}'>Detail</a></td>";
+            echo "<td>{$row['nim']}</td>";
+            echo "<td>{$row['nama']}</td>";
+            if (isset($_SESSION['nim']) && $_SESSION['nim'] === $row['nim']) {
+              echo "<td><a href='detail.php?nim={$row['nim']}'>Detail</a> | <a href='form.php'>Edit</a></td>";
+            } else {
+              echo "<td><a href='detail.php?nim={$row['nim']}'>Detail</a></td>";
+            }
             echo "</tr>";
           };
           ?>
     </tr>
   </table>
   </td>
-  <?= require 'kolom_kanan.php'; ?>
+  <?php
+  if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    require 'kolom_kanan_logout.php'; // Include logout-related content
+  } else {
+    require 'kolom_kanan_login.php'; // Include login-related content
+  }
+  ?>
 
   </tr>
   </table>

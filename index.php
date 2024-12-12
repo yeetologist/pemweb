@@ -1,15 +1,14 @@
 <html lang="id">
 
-<?= require 'head.php'; ?>
-
+<?php require 'head.php'; ?>
 
 <body>
 
   <table border='1' width='100%' cellpadding='10'>
-    <?= require 'kolom_atas.php'; ?>
+    <?php require 'kolom_atas.php'; ?>
 
     <tr height='400' valign='top'>
-      <?= require 'kolom_kiri.php'; ?>
+      <?php require 'kolom_kiri.php'; ?>
       <td width='600'>
         <h1 style="color: red;font-family: tahoma;">Ini bagian judul</h1>
         <h2 style="color: blue">Judul 2</h2>
@@ -20,7 +19,13 @@
         <img src="gambar.png" style="height: auto;width:500px;"><br><br>
         <a href="https://google.com" target="_blank">Klik link disni</a>
       </td>
-      <?= require 'kolom_kanan.php'; ?>
+      <?php
+      if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+        require 'kolom_kanan_logout.php'; // Include logout-related content
+      } else {
+        require 'kolom_kanan_login.php'; // Include login-related content
+      }
+      ?>
     </tr>
   </table>
 

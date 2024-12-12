@@ -1,32 +1,31 @@
 <?php
 require 'koneksi.php';
-$stmt1 = $pdo->prepare("SELECT * FROM mahasiswas WHERE created_at <= :timestamp1");
-$stmt1->execute([':timestamp1' => '2024-12-12 12:26:45']);
+$stmt1 = $pdo->prepare("SELECT * FROM mahasiswas WHERE created_at <= :timestamp1 AND nama != :nama");
+$stmt1->execute([':timestamp1' => '2024-12-12 12:26:45', ':nama' => 'admin']);
 $result1 = $stmt1->fetchAll();
 
-$stmt2 = $pdo->prepare("SELECT * FROM mahasiswas WHERE created_at >= :timestamp2");
-$stmt2->execute([':timestamp2' => '2024-12-12 12:28:08']);
+$stmt2 = $pdo->prepare("SELECT * FROM mahasiswas WHERE created_at >= :timestamp2 AND nama != :nama");
+$stmt2->execute([':timestamp2' => '2024-12-12 12:28:08', ':nama' => 'admin']);
 $result2 = $stmt2->fetchAll();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan'])) {
   $nim = htmlspecialchars($_POST['nim']);
   $nama = htmlspecialchars($_POST['nama']);
-  print_r($nim);
-  print_r($nama);
   $stmtIntput = $pdo->prepare("INSERT INTO mahasiswas (nim, nama, created_at, updated_at) VALUES (:nim, :nama, NOW(), NOW())");
   $stmtIntput->execute([':nim' => $nim, ':nama' => $nama]);
   header('Location: menu5.php');
+  exit();
 }
 
 ?>
 <html lang="id">
-<?= require 'head.php'; ?>
+<?php require 'head.php'; ?>
 
 <body>
   <table border='1' width='100%' cellpadding='10'>
-    <?= require 'kolom_atas.php'; ?>
+    <?php require 'kolom_atas.php'; ?>
     <tr height='400' valign='top'>
-      <?= require 'kolom_kiri.php'; ?>
+      <?php require 'kolom_kiri.php'; ?>
       <td width='700'>
         <form action='' method="POST">
           <table cellpadding='3'>
@@ -105,7 +104,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan'])) {
           </tr>
         </table>
       </td>
-      <?= require 'kolom_kanan.php'; ?>
+      <?php
+      if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+        require 'kolom_kanan_logout.php'; // Include logout-related content
+      } else {
+        require 'kolom_kanan_login.php'; // Include login-related content
+      }
+      ?>
     </tr>
   </table>
 </body>

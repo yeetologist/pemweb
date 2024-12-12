@@ -1,7 +1,7 @@
 <td width='300' style='background:#eaeaea;'>
   Kolom Kanan<br>
   <br>
-  <form method='POST' action=''>
+  <form method='POST' action='login.php'>
     <input type='text' name='user' placeholder='Username'>
     <br>
     <br>
