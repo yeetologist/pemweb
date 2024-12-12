@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
   $stmt->execute([':nim' => $nim]);
   $user = $stmt->fetch();
   if ($user) {
-    if ($nama === $user['nama']) { // Change to password_verify($password, $user['password']) if hashing
+    if ($nama === $user['nama']) {
       // Create session variables
 
       updateSession($user);

@@ -29,6 +29,10 @@ $result = $stmt->fetchAll();
             echo "<td>{$row['nama']}</td>";
             if (isset($_SESSION['nim']) && $_SESSION['nim'] === $row['nim']) {
               echo "<td><a href='detail.php?nim={$row['nim']}'>Detail</a> | <a href='form.php'>Edit</a></td>";
+            } else if (
+              isset($_SESSION['nim']) && $_SESSION['nim'] === 'admin'
+            ) {
+              echo "<td><a href='detail.php?nim={$row['nim']}'>Detail</a> | <a href='form.php'>Edit</a> | | <a href='hapus.php?id={$row['id']}'>Delete</a></td>";
             } else {
               echo "<td><a href='detail.php?nim={$row['nim']}'>Detail</a></td>";
             }
