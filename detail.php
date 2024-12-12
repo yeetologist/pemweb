@@ -21,7 +21,7 @@ if (isset($_GET['nim'])) {
 
 
 <html lang="id">
-<?php require 'head.php'; ?>
+<?php require './partials/head.php'; ?>
 
 <head>
   <link rel="stylesheet" href="style2.css">
@@ -30,7 +30,7 @@ if (isset($_GET['nim'])) {
 <body>
 
   <table border='1' width='100%' cellpadding='10'>
-    <?php require 'kolom_atas.php'; ?>
+    <?php require './partials/kolom_atas.php'; ?>
 
     <tr height='400' valign='top'>
       <td width='300' style='background:#eaeaea;'>Kolom Kiri</td>
@@ -88,9 +88,9 @@ if (isset($_GET['nim'])) {
       </td>
       <?php
       if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-        require 'kolom_kanan_logout.php'; // Include logout-related content
+        require './partials/kolom_kanan_logout.php'; // Include logout-related content
       } else {
-        require 'kolom_kanan_login.php'; // Include login-related content
+        require './partials/kolom_kanan_login.php'; // Include login-related content
       }
       ?>
     </tr>

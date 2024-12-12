@@ -60,20 +60,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan'])) {
       echo "Error: " . $e->getMessage();
     }
   }
-};
+} else {
+  $_SESSION['nim'] = !empty($_SESSION['nim']) ? $_SESSION['nim'] : '';
+  $_SESSION['nama'] = !empty($_SESSION['nama']) ? $_SESSION['nama'] : '';
+  $_SESSION['jeniskelamin'] = !empty($_SESSION['jeniskelamin']) ? $_SESSION['jeniskelamin'] : '';
+  $_SESSION['hobi'] = isset($_SESSION['hobi']) ? $_SESSION['hobi'] : '[]'; // Default to empty JSON array
+  if (!is_array($_SESSION['hobi'])) {
+    $_SESSION['hobi'] = json_decode($_SESSION['hobi'], true); // Decode JSON string into an array
+  }
+  $_SESSION['agama'] = !empty($_SESSION['agama']) ? $_SESSION['agama'] : '';
+  $_SESSION['alamat'] = !empty($_SESSION['alamat']) ? $_SESSION['alamat'] : '';
+}
 ?>
 
 <html lang="id">
 
-<?php require 'head.php'; ?>
+<?php require './partials/head.php'; ?>
 
 <body>
 
   <table border='1' width='100%' cellpadding='10'>
-    <?php require 'kolom_atas.php'; ?>
+    <?php require './partials/kolom_atas.php'; ?>
 
     <tr height='400' valign='top'>
-      <?php require 'kolom_kiri.php'; ?>
+      <?php require './partials/kolom_kiri.php'; ?>
       <td width='600'>
         <form method="POST" enctype="multipart/form-data">
           <table cellpadding='10'>
@@ -104,13 +114,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan'])) {
               <td>:</td>
               <td>
                 <label>
-                  <input type='checkbox' name='hobi[]' value='Hobi 1' <?= in_array('Hobi 1', json_decode($_SESSION['hobi'])) ? 'checked' : ''; ?>> Hobi 1
+                  <input type='checkbox' name='hobi[]' value='Hobi 1' <?= in_array('Hobi 1', $_SESSION['hobi']) ? 'checked' : ''; ?>> Hobi 1
                 </label>
                 <label>
-                  <input type='checkbox' name='hobi[]' value='Hobi 2' <?= in_array('Hobi 2', json_decode($_SESSION['hobi'])) ? 'checked' : ''; ?>> Hobi 2
+                  <input type='checkbox' name='hobi[]' value='Hobi 2' <?= in_array('Hobi 2', $_SESSION['hobi']) ? 'checked' : ''; ?>> Hobi 2
                 </label>
                 <label>
-                  <input type='checkbox' name='hobi[]' value='Hobi 3' <?= in_array('Hobi 3', json_decode($_SESSION['hobi'])) ? 'checked' : ''; ?>> Hobi 3
+                  <input type='checkbox' name='hobi[]' value='Hobi 3' <?= in_array('Hobi 3', $_SESSION['hobi']) ? 'checked' : ''; ?>> Hobi 3
                 </label>
               </td>
             </tr>
@@ -145,9 +155,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan'])) {
         </form>
         <?php
         if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-          require 'kolom_kanan_logout.php'; // Include logout-related content
+          require './partials/kolom_kanan_logout.php'; // Include logout-related content
         } else {
-          require 'kolom_kanan_login.php'; // Include login-related content
+          require './partials/kolom_kanan_login.php'; // Include login-related content
         }
         ?>
     </tr>

@@ -5,16 +5,16 @@ $stmt->execute();
 $result = $stmt->fetchAll();
 ?>
 <html lang="id">
-<?php require 'head.php'; ?>
+<?php require './partials/head.php'; ?>
 
 
 <body>
 
   <table border='1' width='100%' cellpadding='10'>
-    <?php require 'kolom_atas.php'; ?>
+    <?php require './partials/kolom_atas.php'; ?>
 
     <tr height='400' valign='top'>
-      <?php require 'kolom_kiri.php'; ?>
+      <?php require './partials/kolom_kiri.php'; ?>
       <td width='700'>
         <table border='1' cellpadding='10'>
           <tr bgcolor='#ccc'>
@@ -40,9 +40,9 @@ $result = $stmt->fetchAll();
   </td>
   <?php
   if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-    require 'kolom_kanan_logout.php'; // Include logout-related content
+    require './partials/kolom_kanan_logout.php'; // Include logout-related content
   } else {
-    require 'kolom_kanan_login.php'; // Include login-related content
+    require './partials/kolom_kanan_login.php'; // Include login-related content
   }
   ?>
 

@@ -1,14 +1,14 @@
 <html lang="id">
 
-<?php require 'head.php'; ?>
+<?php require './partials/head.php'; ?>
 
 <body>
 
   <table border='1' width='100%' cellpadding='10'>
-    <?php require 'kolom_atas.php'; ?>
+    <?php require './partials/kolom_atas.php'; ?>
 
     <tr height='400' valign='top'>
-      <?php require 'kolom_kiri.php'; ?>
+      <?php require './partials/kolom_kiri.php'; ?>
       <td width='600'>
         <h1 style="color: red;font-family: tahoma;">Ini bagian judul</h1>
         <h2 style="color: blue">Judul 2</h2>
@@ -21,9 +21,9 @@
       </td>
       <?php
       if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-        require 'kolom_kanan_logout.php'; // Include logout-related content
+        require './partials/kolom_kanan_logout.php'; // Include logout-related content
       } else {
-        require 'kolom_kanan_login.php'; // Include login-related content
+        require './partials/kolom_kanan_login.php'; // Include login-related content
       }
       ?>
     </tr>
