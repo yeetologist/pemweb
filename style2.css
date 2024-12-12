@@ -1,0 +1,23 @@
+body{
+	font-family:tahoma;
+}
+
+h1{
+	color:yellow;
+}
+
+a{margin:0px;padding:0px;}
+
+#menu a{
+	font-weight:bold;
+	color:blue;
+	margin:10px;
+	background:#eee;
+	padding:15px;
+}
+
+#menu a:hover{
+	background:#000;
+	color:#fff;
+	text-decoration:none;
+}
